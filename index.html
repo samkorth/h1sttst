@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Materials Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f6be00 0%, #e6ac00 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .step {
+            margin-bottom: 40px;
+            padding: 30px;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover {
+            border-color: #f6be00;
+            box-shadow: 0 5px 15px rgba(246, 190, 0, 0.1);
+        }
+        
+        .step h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-number {
+            background: #f6be00;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #f6be00;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .template-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .template-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .template-card:hover {
+            border-color: #f6be00;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .template-card.selected {
+            border-color: #f6be00;
+            background: #fff9e6;
+        }
+        
+        .template-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        
+        .template-info {
+            padding: 15px;
+        }
+        
+        .template-info h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .template-category {
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #666;
+            display: inline-block;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #f6be00 0%, #e6ac00 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(246, 190, 0, 0.4);
+        }
+        
+        .generate-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .results {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .results.active {
+            display: block;
+        }
+        
+        .error {
+            background: #ffe6e6;
+            color: #d00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .template-formats {
+            margin-top: 15px;
+            padding: 0;
+            background: transparent;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .template-formats.show {
+            display: block;
+        }
+        
+        .formats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+        
+        .formats-header:hover {
+            background: #e9ecef;
+            border-color: #f6be00;
+        }
+        
+        .formats-header h4 {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .dropdown-arrow {
+            transition: transform 0.3s ease;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        .formats-header.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .formats-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .formats-dropdown.open {
+            max-height: 500px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .format-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            padding: 15px;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        
+        .format-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .format-card:hover {
+            border-color: #f6be00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+        
+        .format-card.selected {
+            border-color: #f6be00;
+            background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
+            box-shadow: 0 6px 16px rgba(246, 190, 0, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .format-preview {
+            width: 100%;
+            height: 100px;
+            overflow: hidden;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .format-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .format-card:hover .format-preview img {
+            transform: scale(1.05);
+        }
+        
+        .format-info {
+            padding: 10px;
+        }
+        
+        .format-checkbox {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+        
+        .format-checkbox input {
+            margin-right: 6px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            accent-color: #f6be00;
+        }
+        
+        .format-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.85rem;
+            line-height: 1.2;
+        }
+        
+        .format-dimensions {
+            font-size: 0.75rem;
+            color: #666;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Marketing Materials Generator</h1>
+            <p>Create professional marketing materials in minutes</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Step 1: LO Information -->
+            <div class="step">
+                <h2><span class="step-number">1</span>Your Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loName">Full Name</label>
+                        <input type="text" id="loName" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="loEmail">Email Address</label>
+                        <input type="email" id="loEmail" placeholder="your.email@company.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loPhone">Cell Phone</label>
+                        <input type="tel" id="loPhone" placeholder="(555) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label for="loOfficePhone">Office Phone</label>
+                        <input type="tel" id="loOfficePhone" placeholder="(555) 123-4567">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="loNMLS">NMLS Number</label>
+                        <input type="text" id="loNMLS" placeholder="123456">
+                    </div>
+                    <div class="form-group">
+                        <label for="loExtension">Extension (Optional)</label>
+                        <input type="text" id="loExtension" placeholder="123">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="loHeadshot">Professional Headshot</label>
+                    <input type="file" id="loHeadshot" accept="image/*">
+                </div>
+            </div>
+            
+            <!-- Step 2: Realtor Information -->
+            <div class="step">
+                <h2><span class="step-number">2</span>Realtor Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="realtorName">Realtor Name</label>
+                        <input type="text" id="realtorName" placeholder="Enter realtor's name">
+                    </div>
+                    <div class="form-group">
+                        <label for="realtorEmail">Realtor Email</label>
+                        <input type="email" id="realtorEmail" placeholder="realtor@email.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="realtorPhone">Realtor Phone</label>
+                    <input type="tel" id="realtorPhone" placeholder="(555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label for="realtorHeadshot">Realtor Headshot (Optional)</label>
+                    <input type="file" id="realtorHeadshot" accept="image/*">
+                </div>
+            </div>
+            
+            <!-- Step 3: Template Selection -->
+            <div class="step">
+                <h2><span class="step-number">3</span>Select Templates</h2>
+                <p style="margin-bottom: 20px; color: #666;">Click on templates to select them for generation:</p>
+                <div class="template-gallery" id="templateGallery">
+                    <div class="loading">Loading templates...</div>
+                </div>
+            </div>
+            
+            <!-- Generate Button -->
+            <button class="generate-btn" id="generateBtn" onclick="generateMaterials()">
+                Generate Marketing Materials
+            </button>
+            
+            <!-- Loading State -->
+            <div class="loading" id="loadingState">
+                <h3>Generating your marketing materials...</h3>
+                <p>This may take a few moments. Please don't close this window.</p>
+            </div>
+            
+            <!-- Results -->
+            <div class="results" id="results">
+                <h3>Your marketing materials are ready!</h3>
+                <div id="downloadLinks"></div>
+            </div>
+            
+            <!-- Error State -->
+            <div class="error" id="errorState">
+                <h3>Something went wrong</h3>
+                <p id="errorMessage"></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration
+        const ABYSSAL_API_KEY = 'A43tNuR9Cc1fvzRBnM2fj2dEmy1VeQ1g5j9RUl01';
+        const ABYSSAL_BASE_URL = 'https://api.abyssale.com';
+        
+        let templates = [];
+        let selectedTemplates = [];
+        let templateFormats = {};
+        
+        // Initialize the app
+        async function initApp() {
+            await loadTemplates();
+        }
+        
+        // Load templates from Abyssal API
+        async function loadTemplates() {
+            try {
+                const response = await fetch(`${ABYSSAL_BASE_URL}/templates`, {
+                    headers: {
+                        'x-api-key': ABYSSAL_API_KEY
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load templates');
+                }
+                
+                templates = await response.json();
+                displayTemplates();
+            } catch (error) {
+                console.error('Error loading templates:', error);
+                showError('Failed to load templates. Please check your API key and try again.');
+            }
+        }
+        
+        // Display templates in the gallery
+        function displayTemplates() {
+            const gallery = document.getElementById('templateGallery');
+            
+            if (templates.length === 0) {
+                gallery.innerHTML = '<p>No templates found.</p>';
+                return;
+            }
+            
+            gallery.innerHTML = templates.map(template => `
+                <div class="template-card" onclick="toggleTemplate('${template.id}')">
+                    <img src="${template.preview_url}" alt="${template.name}" class="template-preview">
+                    <div class="template-info">
+                        <h3>${template.name}</h3>
+                        <span class="template-category">${template.category_name}</span>
+                        <div class="template-formats" id="formats-${template.id}"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Toggle template selection
+        async function toggleTemplate(templateId) {
+            const card = event.currentTarget;
+            const formatsDiv = card.querySelector('.template-formats');
+            
+            if (card.classList.contains('selected')) {
+                // Deselect template
+                card.classList.remove('selected');
+                formatsDiv.classList.remove('show');
+                selectedTemplates = selectedTemplates.filter(t => t.templateId !== templateId);
+            } else {
+                // Select template and load formats
+                card.classList.add('selected');
+                await loadTemplateFormats(templateId, formatsDiv);
+                formatsDiv.classList.add('show');
+                
+                // Add to selected with default formats
+                selectedTemplates.push({
+                    templateId: templateId,
+                    selectedFormats: []
+                });
+            }
+            
+            updateGenerateButton();
+        }
+        
+        // Toggle formats dropdown
+        function toggleFormatsDropdown(templateId, header) {
+            event.stopPropagation();
+            const dropdown = document.getElementById(`dropdown-${templateId}`);
+            const isOpen = dropdown.classList.contains('open');
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.formats-dropdown').forEach(d => {
+                d.classList.remove('open');
+            });
+            document.querySelectorAll('.formats-header').forEach(h => {
+                h.classList.remove('open');
+            });
+            
+            // Toggle this dropdown
+            if (!isOpen) {
+                dropdown.classList.add('open');
+                header.classList.add('open');
+            }
+        }
+        function toggleFormat(templateId, formatId, formatCard) {
+            event.stopPropagation();
+            const checkbox = formatCard.querySelector('input');
+            const template = selectedTemplates.find(t => t.templateId === templateId);
+            
+            // Toggle checkbox state
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                formatCard.classList.add('selected');
+                if (template && !template.selectedFormats.includes(formatId)) {
+                    template.selectedFormats.push(formatId);
+                }
+            } else {
+                formatCard.classList.remove('selected');
+                if (template) {
+                    template.selectedFormats = template.selectedFormats.filter(f => f !== formatId);
+                }
+            }
+            
+            updateGenerateButton();
+        }
+        async function loadTemplateFormats(templateId, formatsDiv) {
+            try {
+                formatsDiv.innerHTML = '<p>Loading formats...</p>';
+                
+                const response = await fetch(`${ABYSSAL_BASE_URL}/templates/${templateId}`, {
+                    headers: {
+                        'x-api-key': ABYSSAL_API_KEY
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load formats');
+                }
+                
+                const templateData = await response.json();
+                const formats = templateData.formats || [];
+                
+                if (formats.length === 0) {
+                    formatsDiv.innerHTML = '<p>No formats available</p>';
+                    return;
+                }
+                
+                const formatHTML = `
+                    <h4>Select Formats:</h4>
+                    <div class="format-options">
+                        ${formats.map(format => `
+                            <label class="format-checkbox" onclick="toggleFormat('${templateId}', '${format.id}', this)">
+                                <input type="checkbox" value="${format.id}">
+                                <span>${format.name} (${format.width}x${format.height})</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                
+                formatsDiv.innerHTML = formatHTML;
+                templateFormats[templateId] = formats;
+                
+            } catch (error) {
+                console.error('Error loading formats:', error);
+                formatsDiv.innerHTML = '<p>Error loading formats</p>';
+            }
+        }
+        function updateGenerateButton() {
+            const btn = document.getElementById('generateBtn');
+            const hasLOInfo = document.getElementById('loName').value && 
+                             document.getElementById('loEmail').value && 
+                             document.getElementById('loPhone').value && 
+                             document.getElementById('loOfficePhone').value && 
+                             document.getElementById('loNMLS').value;
+            const hasTemplates = selectedTemplates.length > 0;
+            
+            btn.disabled = !(hasLOInfo && hasTemplates);
+            btn.textContent = hasTemplates 
+                ? `Generate ${selectedTemplates.length} Template${selectedTemplates.length > 1 ? 's' : ''}`
+                : 'Generate Marketing Materials';
+        }
+        
+        // Generate materials
+        async function generateMaterials() {
+            const totalFormats = selectedTemplates.reduce((total, template) => 
+                total + template.selectedFormats.length, 0);
+                
+            if (totalFormats === 0) {
+                showError('Please select at least one format from your chosen templates.');
+                return;
+            }
+            
+            // Show loading state
+            document.getElementById('loadingState').classList.add('active');
+            document.getElementById('generateBtn').style.display = 'none';
+            
+            try {
+                const loData = {
+                    'lo-full-name': { payload: document.getElementById('loName').value },
+                    'email': { payload: document.getElementById('loEmail').value },
+                    'cell': { payload: document.getElementById('loPhone').value },
+                    'office-number': { payload: document.getElementById('loOfficePhone').value },
+                    'ext-number': { payload: document.getElementById('loExtension').value },
+                    'nmls': { payload: document.getElementById('loNMLS').value },
+                    'title': { payload: 'loan' },
+                    'o': { payload: 'O: ' },
+                    'c': { payload: 'C: ' }
+                };
+                
+                // Add realtor data if provided
+                const realtorName = document.getElementById('realtorName').value;
+                const realtorEmail = document.getElementById('realtorEmail').value;
+                const realtorPhone = document.getElementById('realtorPhone').value;
+                
+                if (realtorName) loData['r-name'] = { payload: realtorName };
+                if (realtorEmail) loData['realtor-email'] = { payload: realtorEmail };
+                if (realtorPhone) loData['realtor-c'] = { payload: realtorPhone };
+                if (realtorPhone) loData['realtor-number'] = { payload: realtorPhone };
+                if (realtorName) loData['r-title'] = { payload: 'REALTOR®' };
+                
+                const results = [];
+                
+                // Generate each selected template with selected formats
+                for (const templateSelection of selectedTemplates) {
+                    const template = templates.find(t => t.id === templateSelection.templateId);
+                    
+                    for (const formatId of templateSelection.selectedFormats) {
+                        try {
+                            const response = await fetch(`${ABYSSAL_BASE_URL}/async/banner-builder/${templateSelection.templateId}/generate`, {
+                                method: 'POST',
+                                headers: {
+                                    'x-api-key': ABYSSAL_API_KEY,
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    formats: [formatId],
+                                    elements: loData
+                                })
+                            });
+                            
+                            if (response.ok) {
+                                const result = await response.json();
+                                const format = templateFormats[templateSelection.templateId]?.find(f => f.id === formatId);
+                                results.push({
+                                    template: template.name,
+                                    format: format ? `${format.id} (${format.width}×${format.height})` : 'Format',
+                                    url: result.url || result.generation_id,
+                                    generation_id: result.generation_id
+                                });
+                            }
+                        } catch (error) {
+                            console.error(`Error generating template ${templateSelection.templateId} format ${formatId}:`, error);
+                        }
+                    }
+                }
+                
+                if (results.length > 0) {
+                    displayResults(results);
+                } else {
+                    showError('Failed to generate any materials. Please try again.');
+                }
+            } catch (error) {
+                console.error('Generation error:', error);
+                showError('Failed to generate materials. Please check your information and try again.');
+            } finally {
+                document.getElementById('loadingState').classList.remove('active');
+                document.getElementById('generateBtn').style.display = 'block';
+            }
+        }
+        
+        // Display generation results
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('results');
+            const downloadLinks = document.getElementById('downloadLinks');
+            
+            downloadLinks.innerHTML = results.map(result => `
+                <div style="margin-bottom: 15px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+                    <h4>${result.template} - ${result.format}</h4>
+                    ${result.url ? `<a href="${result.url}" target="_blank" download style="color: #f6be00; text-decoration: none; font-weight: 600;">
+                        Download Image
+                    </a>` : `<p>Generation ID: ${result.generation_id} (Processing...)</p>`}
+                </div>
+            `).join('');
+            
+            resultsDiv.classList.add('active');
+        }
+        
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorState');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorDiv.classList.add('active');
+            
+            setTimeout(() => {
+                errorDiv.classList.remove('active');
+            }, 5000);
+        }
+        
+        // Add event listeners for form validation
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = ['loName', 'loEmail', 'loPhone', 'loNMLS', 'loOfficePhone'];
+            inputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', updateGenerateButton);
+            });
+            
+            initApp();
+        });
+    </script>
+</body>
+</html>
