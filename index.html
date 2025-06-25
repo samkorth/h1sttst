@@ -4,27 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home 1st Lending - Marketing Materials Generator</title>
-    <!-- 
-    IMPORTANT FOR REPLIT USERS:
-    If you're getting Content Security Policy errors, add this to your replit.nix file:
-    
-    [nix]
-    channel = "stable-21_11"
-    
-    And add a .replit file with:
-    
-    [hosting]
-    headers = { "Content-Security-Policy" = "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;" }
-    -->
-     <style>
+    <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #f8f9fa;
             min-height: 100vh;
             padding: 20px;
@@ -40,54 +30,32 @@
         }
         
         .header {
-            background: #000;
-            padding: 40px;
+            background: #000000;
+            padding: 20px 40px 40px;
             text-align: center;
             color: white;
             position: relative;
-            overflow: hidden;
         }
         
         .logo {
-            max-width: 150px;
+            width: 150px;
             margin-bottom: 20px;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(246,190,0,0.1) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.3; }
         }
         
         .header h1 {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
         }
         
         .header p {
             font-size: 1.1rem;
             opacity: 0.9;
-            position: relative;
-            z-index: 1;
         }
         
         .accent-bar {
             height: 4px;
             background: #f6be00;
-            margin-bottom: 40px;
         }
         
         .main-content {
@@ -100,16 +68,10 @@
             border: 1px solid #e9ecef;
             border-radius: 12px;
             background: #ffffff;
-            transition: all 0.3s ease;
-        }
-        
-        .step:hover {
-            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-            transform: translateY(-2px);
         }
         
         .step h2 {
-            color: #000;
+            color: #000000;
             margin-bottom: 24px;
             font-size: 1.5rem;
             display: flex;
@@ -118,7 +80,7 @@
         
         .step-number {
             background: #f6be00;
-            color: #000;
+            color: #000000;
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -173,6 +135,26 @@
             }
         }
         
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #f6be00;
+            background: #fffbf0;
+        }
+        
+        .upload-area.has-file {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        
         .template-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -186,7 +168,8 @@
             overflow: hidden;
             transition: all 0.3s ease;
             background: white;
-            cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
         
         .template-card:hover {
@@ -206,12 +189,14 @@
             height: 200px;
             object-fit: contain;
             background: #f8f9fa;
+            padding: 10px;
+            flex-shrink: 0;
         }
         
-        .template-info h3 {
-            margin-bottom: 12px;
-            color: #000;
-            font-size: 1.1rem;
+        .template-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
         
         .template-category {
@@ -222,38 +207,89 @@
             color: #495057;
             display: inline-block;
             font-weight: 500;
+            margin-bottom: 8px;
+            align-self: flex-start;
+        }
+        
+        .template-info h3 {
+            margin-bottom: 16px;
+            color: #000000;
+            font-size: 1.1rem;
+            line-height: 1.3;
+        }
+        
+        .template-options-btn {
+            background: #f6be00;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .template-options-btn:hover {
+            background: #e6ac00;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(246,190,0,0.3);
+        }
+
+        .template-options-btn.open {
+            background: #000;
+            color: #f6be00;
+        }
+
+        .template-options-arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .template-options-btn.open .template-options-arrow {
+            transform: rotate(180deg);
         }
         
         .template-formats {
-            margin-top: 16px;
             display: none;
+            grid-column: 1 / -1;
+            background: #f8f9fa;
+            border: 2px solid #f6be00;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 16px;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .template-formats.show {
             display: block;
         }
         
-        .formats-header {
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-weight: 600;
-            color: #495057;
-            font-size: 0.9rem;
-        }
-        
         .format-options {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 4px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 8px;
         }
         
         .format-card {
-            padding: 12px;
+            padding: 12px 16px;
             border: 2px solid #e9ecef;
             border-radius: 8px;
             cursor: pointer;
@@ -261,6 +297,7 @@
             background: white;
             display: flex;
             align-items: center;
+            min-height: auto;
         }
         
         .format-card:hover {
@@ -274,7 +311,7 @@
         }
         
         .format-checkbox {
-            margin-right: 8px;
+            margin-right: 12px;
             accent-color: #f6be00;
         }
         
@@ -284,20 +321,19 @@
         
         .format-name {
             font-weight: 600;
-            color: #000;
-            font-size: 0.85rem;
-            display: block;
+            color: #000000;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
         }
         
         .format-dimensions {
             font-size: 0.75rem;
             color: #6c757d;
-            margin-top: 2px;
         }
         
         .generate-btn {
-            background: linear-gradient(135deg, #f6be00 0%, #e6ac00 100%);
-            color: #000;
+            background: #f6be00;
+            color: #000000;
             border: none;
             padding: 16px 32px;
             font-size: 1.1rem;
@@ -307,9 +343,6 @@
             transition: all 0.3s ease;
             width: 100%;
             margin-top: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -340,7 +373,7 @@
         }
         
         .loading h3 {
-            color: #000;
+            color: #000000;
             margin-bottom: 16px;
         }
         
@@ -358,10 +391,27 @@
             to { transform: rotate(360deg); }
         }
         
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 24px;
+        }
+        
+        .progress-fill {
+            background: #f6be00;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
         .results {
             display: none;
             margin-top: 32px;
-            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 12px;
         }
         
         .results.active {
@@ -369,20 +419,22 @@
         }
         
         .results h3 {
-            color: #000;
+            color: #000000;
             margin-bottom: 24px;
             font-size: 1.5rem;
+            text-align: center;
         }
         
         .download-all-container {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
         
         .result-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 24px;
+            margin-bottom: 40px;
         }
         
         .result-card {
@@ -391,6 +443,32 @@
             border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s ease;
+            padding: 20px;
+        }
+        
+        .result-preview {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .result-preview-container {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .result-preview-unavailable {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9rem;
         }
         
         .result-card:hover {
@@ -398,14 +476,8 @@
             transform: translateY(-2px);
         }
         
-        .result-preview, .preview-iframe {
-            width: 100%;
-            height: 200px;
-            background: #f8f9fa;
-        }
-        
         .result-info h4 {
-            color: #000;
+            color: #000000;
             margin-bottom: 8px;
             font-size: 1.1rem;
         }
@@ -418,7 +490,7 @@
         
         .download-btn {
             background: #f6be00;
-            color: #000;
+            color: #000000;
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 6px;
@@ -455,16 +527,36 @@
             color: #28a745;
             font-size: 3rem;
             margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .footer-message {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid #e9ecef;
+            margin-top: 40px;
+        }
+        
+        .footer-message a {
+            color: #f6be00;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .footer-message a:hover {
+            text-decoration: underline;
         }
     </style>
-    <!-- JSZip & FileSaver for ZIP download -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://www.letsgetyouapproved.com/wp-client_data/21439/4824/uploads/2025/03/Home-1st-Lending-Logo.webp" alt="Home 1st Lending Logo" class="logo">
+            <img src="https://www.letsgetyouapproved.com/wp-client_data/21439/4824/uploads/2025/03/Home-1st-Lending-Logo.webp" 
+                 alt="Home 1st Lending" 
+                 class="logo"
+                 onerror="this.style.display='none'">
             <h1>Marketing Materials Generator</h1>
             <p>Create professional co-branded materials in minutes</p>
         </div>
@@ -506,8 +598,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="loHeadshot">Professional Headshot (Coming Soon)</label>
-                    <input type="file" id="loHeadshot" accept="image/*" disabled>
+                    <label for="loHeadshot">Professional Headshot</label>
+                    <div class="upload-area" onclick="document.getElementById('loHeadshot').click()" id="loHeadshotArea">
+                        <input type="file" id="loHeadshot" accept="image/*" style="display: none;" onchange="handleFileUpload('loHeadshot')">
+                        <p id="loHeadshotText">📷 Click to upload photo</p>
+                    </div>
                 </div>
             </div>
             
@@ -528,6 +623,22 @@
                     <label for="realtorPhone">Realtor Phone</label>
                     <input type="tel" id="realtorPhone" placeholder="(555) 123-4567">
                 </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="realtorHeadshot">Realtor Headshot</label>
+                        <div class="upload-area" onclick="document.getElementById('realtorHeadshot').click()" id="realtorHeadshotArea">
+                            <input type="file" id="realtorHeadshot" accept="image/*" style="display: none;" onchange="handleFileUpload('realtorHeadshot')">
+                            <p id="realtorHeadshotText">📷 Click to upload photo</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="realtorLogo">Realtor Company Logo</label>
+                        <div class="upload-area" onclick="document.getElementById('realtorLogo').click()" id="realtorLogoArea">
+                            <input type="file" id="realtorLogo" accept="image/*" style="display: none;" onchange="handleFileUpload('realtorLogo')">
+                            <p id="realtorLogoText">🏢 Click to upload logo</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <!-- Step 3: Template Selection -->
@@ -535,10 +646,7 @@
                 <h2><span class="step-number">3</span>Select Templates & Formats</h2>
                 <p style="margin-bottom: 20px; color: #6c757d;">Click templates to select, then choose desired formats for each:</p>
                 <div class="template-gallery" id="templateGallery">
-                    <div class="loading active">
-                        <div class="loading-spinner"></div>
-                        <p>Loading templates...</p>
-                    </div>
+                    <p>Loading templates...</p>
                 </div>
             </div>
             
@@ -561,7 +669,15 @@
             <div class="results" id="results">
                 <div class="success-icon">✅</div>
                 <h3>Your Marketing Materials Are Ready!</h3>
+                
+                <div class="download-all-container" id="downloadAllContainer"></div>
+                
                 <div class="result-grid" id="downloadLinks"></div>
+                
+                <div class="footer-message">
+                    Brought to you by the Home 1st Marketing Team<br>
+                    Having issues? <a href="#">Contact marketing on Slack</a>
+                </div>
             </div>
             
             <!-- Error State -->
@@ -572,148 +688,303 @@
         </div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
         // Configuration
         const ABYSSAL_API_KEY = 'A43tNuR9Cc1fvzRBnM2fj2dEmy1VeQ1g5j9RUl01';
         const ABYSSAL_BASE_URL = 'https://api.abyssale.com';
+        const IMGBB_API_KEY = 'YOUR_IMGBB_API_KEY';
         
         let templates = [];
-        let selectedTemplates = new Map(); // Using Map for better tracking
+        let selectedTemplates = new Map();
         let templateFormats = {};
+        let uploadedImages = {
+            loHeadshot: null,
+            realtorHeadshot: null,
+            realtorLogo: null
+        };
+        
+        // Fixed toggle demo mode with better DOM stability
+        function toggleDemoMode() {
+            demoMode = !demoMode;
+            document.getElementById('demoStatus').textContent = demoMode ? 'ON' : 'OFF';
+            
+            // Use DocumentFragment to avoid layout thrashing
+            const gallery = document.getElementById('templateGallery');
+            
+            // Clear existing content immediately without scroll anchoring issues
+            gallery.style.contain = 'layout size';
+            gallery.innerHTML = '';
+            
+            // Reset data structures
+            templates = [];
+            selectedTemplates.clear();
+            templateFormats = {};
+            
+            if (demoMode) {
+                templates = [...mockTemplates];
+                displayTemplates();
+                
+                // Fill sample data
+                document.getElementById('loName').value = 'John Smith';
+                document.getElementById('loEmail').value = 'john.smith@home1stlending.com';
+                document.getElementById('loPhone').value = '(555) 123-4567';
+                document.getElementById('loOfficePhone').value = '(555) 987-6543';
+                document.getElementById('loNMLS').value = '123456';
+                updateGenerateButton();
+            } else {
+                loadTemplates();
+            }
+            
+            // Remove contain after a brief delay
+            setTimeout(() => {
+                gallery.style.contain = '';
+            }, 100);
+        }
         
         // Initialize the app
         async function initApp() {
             await loadTemplates();
         }
         
-        // Load templates from Abyssal API
+        // Fixed load templates function with better error handling
         async function loadTemplates() {
             try {
+                console.log('Loading templates from API...');
                 const response = await fetch(`${ABYSSAL_BASE_URL}/templates`, {
+                    method: 'GET',
                     headers: {
-                        'x-api-key': ABYSSAL_API_KEY
+                        'x-api-key': ABYSSAL_API_KEY,
+                        'Content-Type': 'application/json'
                     }
                 });
                 
+                console.log('Response status:', response.status);
+                
                 if (!response.ok) {
-                    throw new Error('Failed to load templates');
+                    const errorText = await response.text();
+                    console.error('API Error Response:', errorText);
+                    throw new Error(`API request failed: ${response.status} - ${errorText}`);
                 }
                 
                 const data = await response.json();
-                templates = data.data || data || [];
+                console.log('API Response:', data);
+                
+                // Handle different possible response structures
+                let templateList = [];
+                if (data.data && Array.isArray(data.data)) {
+                    templateList = data.data;
+                } else if (Array.isArray(data)) {
+                    templateList = data;
+                } else if (data.templates && Array.isArray(data.templates)) {
+                    templateList = data.templates;
+                }
+                
+                console.log('Template list:', templateList);
+                
+                // Filter templates
+                templates = templateList.filter(template => 
+                    template.project_name === 'Flyers' || 
+                    template.category_name === 'Flyers' ||
+                    (template.name && template.name.toLowerCase().includes('flyer'))
+                );
+                
+                console.log('Filtered templates:', templates);
                 displayTemplates();
+                
             } catch (error) {
                 console.error('Error loading templates:', error);
                 document.getElementById('templateGallery').innerHTML = 
-                    '<p style="color: #d00;">Failed to load templates. Please check your API key.</p>';
+                    `<div style="color: #d00; padding: 20px; text-align: center;">
+                        <h3>Failed to load templates</h3>
+                        <p>Error: ${error.message}</p>
+                        <p>Please check your API configuration.</p>
+                    </div>`;
             }
         }
         
-        // Display templates in the gallery
+        // Fixed display templates with consistent layout
         function displayTemplates() {
             const gallery = document.getElementById('templateGallery');
             
             console.log('Displaying templates:', templates);
             
             if (templates.length === 0) {
-                gallery.innerHTML = '<p>No templates found.</p>';
+                gallery.innerHTML = '<p>No templates found in the Flyers project.</p>';
                 return;
             }
             
-            gallery.innerHTML = templates.map(template => {
-                console.log('Template:', template);
+            // Create template cards with consistent structure
+            const templateCards = templates.map(template => {
+                const previewUrl = template.preview_url || template.thumbnail_url || 'https://via.placeholder.com/320x200?text=No+Preview';
+                const categoryName = template.category_name || template.project_name || 'Marketing';
+                
                 return `
-                    <div class="template-card" id="template-${template.id}" onclick="toggleTemplate('${template.id}')">
-                        <img src="${template.preview_url || '/api/placeholder/320/200'}" 
+                    <div class="template-card" id="template-${template.id}">
+                        <img src="${previewUrl}" 
                              alt="${template.name}" 
                              class="template-preview"
-                             onerror="this.src='/api/placeholder/320/200'">
+                             onerror="this.src='https://via.placeholder.com/320x200?text=No+Preview'">
                         <div class="template-info">
+                            <span class="template-category">${categoryName}</span>
                             <h3>${template.name}</h3>
-                            <span class="template-category">${template.category_name || 'Marketing'}</span>
+                            <button class="template-options-btn" id="options-btn-${template.id}" onclick="toggleTemplateOptions('${template.id}')">
+                                <span class="template-options-arrow">▼</span>
+                                Options
+                            </button>
                             <div class="template-formats" id="formats-${template.id}"></div>
                         </div>
                     </div>
                 `;
             }).join('');
+            
+            gallery.innerHTML = templateCards;
         }
         
-        // Toggle template selection
-        async function toggleTemplate(templateId) {
-            const card = document.getElementById(`template-${templateId}`);
+        // Fixed template options toggle with proper arrow handling
+        async function toggleTemplateOptions(templateId) {
             const formatsDiv = document.getElementById(`formats-${templateId}`);
+            const optionsBtn = document.getElementById(`options-btn-${templateId}`);
+            const arrow = optionsBtn.querySelector('.template-options-arrow');
             
-            if (selectedTemplates.has(templateId)) {
-                // Deselect template
-                card.classList.remove('selected');
-                formatsDiv.classList.remove('show');
-                selectedTemplates.delete(templateId);
-            } else {
-                // Select template and load formats
-                card.classList.add('selected');
-                await loadTemplateFormats(templateId);
-                formatsDiv.classList.add('show');
+            if (!formatsDiv || !optionsBtn) {
+                console.error(`Elements not found for template ${templateId}`);
+                return;
             }
             
-            updateGenerateButton();
+            if (formatsDiv.classList.contains('show')) {
+                // Close options
+                formatsDiv.classList.remove('show');
+                optionsBtn.classList.remove('open');
+                arrow.textContent = '▼';
+            } else {
+                // Open options - load formats if not already loaded
+                if (!templateFormats[templateId]) {
+                    arrow.textContent = '⏳';
+                    await loadTemplateFormats(templateId);
+                }
+                formatsDiv.classList.add('show');
+                optionsBtn.classList.add('open');
+                arrow.textContent = '▲';
+            }
         }
         
-        // Load template formats
+        // Load template formats and initialize selection tracking
         async function loadTemplateFormats(templateId) {
             const formatsDiv = document.getElementById(`formats-${templateId}`);
             
             try {
                 formatsDiv.innerHTML = '<p>Loading formats...</p>';
                 
+                console.log(`Loading formats for template: ${templateId}`);
+                
                 const response = await fetch(`${ABYSSAL_BASE_URL}/templates/${templateId}`, {
+                    method: 'GET',
                     headers: {
-                        'x-api-key': ABYSSAL_API_KEY
+                        'x-api-key': ABYSSAL_API_KEY,
+                        'Content-Type': 'application/json'
                     }
                 });
                 
+                console.log('Format response status:', response.status);
+                
                 if (!response.ok) {
-                    throw new Error('Failed to load formats');
+                    const errorText = await response.text();
+                    console.error('Format API Error:', errorText);
+                    throw new Error(`Failed to load formats: ${response.status}`);
                 }
                 
                 const templateData = await response.json();
-                const formats = templateData.formats || templateData.data?.formats || [];
+                console.log('Template data:', templateData);
                 
-                if (formats.length === 0) {
-                    formatsDiv.innerHTML = '<p>No formats available</p>';
-                    return;
+                let formats = [];
+                if (templateData.formats && Array.isArray(templateData.formats)) {
+                    formats = templateData.formats;
+                } else if (templateData.data && templateData.data.formats && Array.isArray(templateData.data.formats)) {
+                    formats = templateData.data.formats;
+                } else if (templateData.template_formats && Array.isArray(templateData.template_formats)) {
+                    formats = templateData.template_formats;
                 }
                 
-                // Store formats
+                console.log('Extracted formats:', formats);
+                
                 templateFormats[templateId] = formats;
-                
-                // Initialize selected formats
-                selectedTemplates.set(templateId, new Set());
-                
-                // Create format cards
-                formatsDiv.innerHTML = `
-                    <div class="formats-header">Select Formats:</div>
-                    <div class="format-options">
-                        ${formats.map(format => `
-                            <div class="format-card" id="format-${templateId}-${format.id}" 
-                                 onclick="toggleFormat(event, '${templateId}', '${format.id}')">
-                                <input type="checkbox" class="format-checkbox" 
-                                       id="checkbox-${templateId}-${format.id}">
-                                <div class="format-info">
-                                    <span class="format-name">${format.id}</span>
-                                    <span class="format-dimensions">${format.width} × ${format.height}px</span>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
+                if (!selectedTemplates.has(templateId)) {
+                    selectedTemplates.set(templateId, new Set());
+                }
+                displayFormats(templateId, formats, formatsDiv);
                 
             } catch (error) {
                 console.error('Error loading formats:', error);
-                formatsDiv.innerHTML = '<p style="color: #d00;">Error loading formats</p>';
+                formatsDiv.innerHTML = `<p style="color: #d00;">Error loading formats: ${error.message}</p>`;
             }
         }
         
-        // Toggle format selection
+        // Display format options with gallery layout
+        function displayFormats(templateId, formats, formatsDiv) {
+            if (formats.length === 0) {
+                formatsDiv.innerHTML = '<p>No formats available</p>';
+                return;
+            }
+            
+            const formatOptionsHtml = `
+                <div class="format-options">
+                    ${formats.map(format => {
+                        const formatId = format.id || format.name || format.format_name || 'unknown';
+                        const formatName = format.name || format.id || format.format_name || 'Unknown Format';
+                        const width = format.width || format.w || 'Unknown';
+                        const height = format.height || format.h || 'Unknown';
+                        
+                        return `
+                            <div class="format-card" id="format-${templateId}-${formatId}" 
+                                 onclick="toggleFormat(event, '${templateId}', '${formatId}')">
+                                <input type="checkbox" class="format-checkbox" 
+                                       id="checkbox-${templateId}-${formatId}">
+                                <div class="format-info">
+                                    <div class="format-name">${formatName}</div>
+                                    <div class="format-dimensions">${width} × ${height}px</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            formatsDiv.innerHTML = formatOptionsHtml;
+        }
+        function displayFormats(templateId, formats, formatsDiv) {
+            if (formats.length === 0) {
+                formatsDiv.innerHTML = '<p>No formats available</p>';
+                return;
+            }
+            
+            const formatOptionsHtml = `
+                <div class="format-options">
+                    ${formats.map(format => {
+                        const formatId = format.id || format.name || format.format_name || 'unknown';
+                        const formatName = format.name || format.id || format.format_name || 'Unknown Format';
+                        const width = format.width || format.w || 'Unknown';
+                        const height = format.height || format.h || 'Unknown';
+                        
+                        return `
+                            <div class="format-card" id="format-${templateId}-${formatId}" 
+                                 onclick="toggleFormat(event, '${templateId}', '${formatId}')">
+                                <input type="checkbox" class="format-checkbox" 
+                                       id="checkbox-${templateId}-${formatId}">
+                                <div class="format-info">
+                                    <span class="format-name">${formatName}</span>
+                                    <span class="format-dimensions">${width} × ${height}px</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            formatsDiv.innerHTML = formatOptionsHtml;
+        }
+        
+        // Format selection toggle
         function toggleFormat(event, templateId, formatId) {
             event.stopPropagation();
             
@@ -738,14 +1009,12 @@
         function updateGenerateButton() {
             const btn = document.getElementById('generateBtn');
             
-            // Check if required fields are filled
             const hasLOInfo = document.getElementById('loName').value && 
                              document.getElementById('loEmail').value && 
                              document.getElementById('loPhone').value && 
                              document.getElementById('loOfficePhone').value && 
                              document.getElementById('loNMLS').value;
             
-            // Count total selected formats
             let totalFormats = 0;
             for (const formats of selectedTemplates.values()) {
                 totalFormats += formats.size;
@@ -760,9 +1029,24 @@
             }
         }
         
-        // Generate materials
+        // Handle file uploads
+        async function handleFileUpload(inputId) {
+            const input = document.getElementById(inputId);
+            const file = input.files[0];
+            
+            if (!file) return;
+            
+            const area = document.getElementById(`${inputId}Area`);
+            const text = document.getElementById(`${inputId}Text`);
+            
+            area.classList.add('has-file');
+            text.textContent = `✅ ${file.name}`;
+            
+            uploadedImages[inputId] = file;
+        }
+        
+        // Generate materials function
         async function generateMaterials() {
-            // Collect all template-format pairs
             const generationTasks = [];
             for (const [templateId, formatIds] of selectedTemplates.entries()) {
                 for (const formatId of formatIds) {
@@ -775,7 +1059,7 @@
                 return;
             }
             
-            // Build data payload
+            // Build data payload with better error handling
             const loData = {
                 'lo-full-name': { payload: document.getElementById('loName').value },
                 'email': { payload: document.getElementById('loEmail').value },
@@ -790,9 +1074,9 @@
             const extValue = document.getElementById('loExtension').value;
             if (extValue) {
                 loData['ext-number'] = { payload: extValue };
+                loData['ext-label'] = { payload: 'EXT: ' };
             }
             
-            // Add realtor data if provided
             const realtorName = document.getElementById('realtorName').value;
             const realtorEmail = document.getElementById('realtorEmail').value;
             const realtorPhone = document.getElementById('realtorPhone').value;
@@ -806,7 +1090,16 @@
                 loData['realtor-number'] = { payload: realtorPhone };
             }
             
-            // Show loading state
+            if (uploadedImages.loHeadshot) {
+                loData['lo-headshot'] = { payload: uploadedImages.loHeadshot };
+            }
+            if (uploadedImages.realtorHeadshot) {
+                loData['realtor-headshot'] = { payload: uploadedImages.realtorHeadshot };
+            }
+            if (uploadedImages.realtorLogo) {
+                loData['realtor-logo'] = { payload: uploadedImages.realtorLogo };
+            }
+            
             document.getElementById('loadingState').classList.add('active');
             document.getElementById('generateBtn').style.display = 'none';
             document.getElementById('results').classList.remove('active');
@@ -815,11 +1108,9 @@
             const results = [];
             let completed = 0;
             
-            // Process each task
             for (const task of generationTasks) {
                 const { templateId, formatId } = task;
                 
-                // Update progress
                 completed++;
                 document.getElementById('loadingMessage').textContent = 
                     `Generating material ${completed} of ${generationTasks.length}...`;
@@ -827,20 +1118,16 @@
                     `${(completed / generationTasks.length) * 100}%`;
                 
                 try {
-                    // Generate for specific format
-                    const url = `${ABYSSAL_BASE_URL}/banner-builder/${templateId}/generate`;
-                    console.log('Calling API:', url);
-                    console.log('Template ID:', templateId);
-                    console.log('Format ID:', formatId);
+                    console.log(`Generating ${templateId}/${formatId}`);
                     
-                    // According to API docs, we need to send template_format_name for specific format
+                    const url = `${ABYSSAL_BASE_URL}/banner-builder/${templateId}/generate`;
+                    
                     const requestBody = {
                         elements: loData,
-                        template_format_name: formatId,
-                        file_type: 'pdf' // Generate as PDF
+                        template_format_name: formatId
                     };
                     
-                    console.log('Sending data:', JSON.stringify(requestBody));
+                    console.log('Request body:', requestBody);
                     
                     const response = await fetch(url, {
                         method: 'POST',
@@ -851,60 +1138,39 @@
                         body: JSON.stringify(requestBody)
                     });
                     
-                    console.log('Response status:', response.status);
-                    console.log('Response ok:', response.ok);
+                    console.log('Generation response status:', response.status);
                     
-                    let result;
-                    try {
-                        const responseText = await response.text();
-                        console.log('Raw response:', responseText);
-                        result = JSON.parse(responseText);
-                    } catch (e) {
-                        console.error('Failed to parse response:', e);
-                        continue;
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Generation error:', errorText);
+                        throw new Error(`Generation failed: ${response.status} - ${errorText}`);
                     }
                     
-                    console.log('Parsed result:', result);
+                    const result = await response.json();
+                    console.log('Generation result:', result);
                     
-                    if (response.ok) {
-                        const template = templates.find(t => t.id === templateId);
-                        const format = templateFormats[templateId]?.find(f => f.id === formatId);
-                        
-                        // According to API docs, the URL is in the file object
-                        let imageUrl = null;
-                        
-                        // Check for file.url or file.cdn_url
-                        if (result.file) {
-                            imageUrl = result.file.cdn_url || result.file.url;
-                            console.log('Found URL in file object:', imageUrl);
-                        }
-                        
-                        // Fallback to old structure just in case
-                        if (!imageUrl) {
-                            imageUrl = result.cdn_url || result.url;
-                        }
-                        
-                        console.log('Final image URL:', imageUrl);
-                        
-                        if (imageUrl) {
-                            results.push({
-                                templateName: template?.name || 'Template',
-                                formatName: format?.id || 'Format', // Changed from format.name to format.id
-                                dimensions: format ? `${format.width} × ${format.height}px` : '',
-                                url: imageUrl,
-                                templateId,
-                                formatId
-                            });
-                            console.log('Successfully added to results');
-                        } else {
-                            console.error('No image URL found in response');
-                            console.error('Full response structure:', JSON.stringify(result, null, 2));
-                        }
-                    } else {
-                        console.error('API Error:', result.error || result.message || 'Unknown error');
+                    const template = templates.find(t => t.id === templateId);
+                    const format = templateFormats[templateId]?.find(f => (f.id || f.name || f.format_name) === formatId);
+                    
+                    let imageUrl = null;
+                    if (result.file) {
+                        imageUrl = result.file.cdn_url || result.file.url;
+                    }
+                    if (!imageUrl) {
+                        imageUrl = result.cdn_url || result.url;
                     }
                     
-                    // Small delay to avoid rate limiting
+                    if (imageUrl) {
+                        results.push({
+                            templateName: template?.name || 'Template',
+                            formatName: format?.id || format?.name || formatId,
+                            dimensions: format ? `${format.width || format.w || 'Unknown'} × ${format.height || format.h || 'Unknown'}px` : '',
+                            url: imageUrl,
+                            templateId,
+                            formatId
+                        });
+                    }
+                    
                     await new Promise(resolve => setTimeout(resolve, 500));
                     
                 } catch (error) {
@@ -912,111 +1178,128 @@
                 }
             }
             
-            // Hide loading, show results or error
             document.getElementById('loadingState').classList.remove('active');
             document.getElementById('generateBtn').style.display = 'block';
             
             if (results.length > 0) {
                 displayResults(results);
             } else {
-                showError('Failed to generate materials. Please check your API key and try again.');
+                showError('Failed to generate materials. Please check the console for detailed error messages and verify your API configuration.');
             }
         }
         
-        // Display generation results
+        // Display generation results with better preview detection
         function displayResults(results) {
             const resultsDiv = document.getElementById('results');
             const downloadLinks = document.getElementById('downloadLinks');
+            const downloadAllContainer = document.getElementById('downloadAllContainer');
             
-            // Add download all button
-            const downloadAllHtml = results.length > 1 ? `
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <button onclick="downloadAll()" class="download-btn" style="display: inline-flex; width: auto; padding: 12px 24px;">
+            if (results.length > 1) {
+                downloadAllContainer.innerHTML = `
+                    <button onclick="downloadAllAsZip()" class="download-btn" style="font-size: 1.2rem; padding: 12px 32px;">
                         <span>📦</span> Download All (${results.length} files)
                     </button>
-                </div>
-            ` : '';
+                `;
+            } else {
+                downloadAllContainer.innerHTML = '';
+            }
             
-            downloadLinks.innerHTML = downloadAllHtml + results.map((result, index) => `
-                <div class="result-card">
-                    <img src="${result.url}" 
-                         alt="${result.templateName}" 
-                         class="result-preview"
-                         onerror="this.style.display='none'">
-                    <div class="result-info">
-                        <h4>${result.templateName}</h4>
-                        <p class="result-format">${result.formatName} • ${result.dimensions}</p>
-                        <button onclick="downloadFile('${result.url}', '${result.templateName}_${result.formatName}.pdf')" 
-                                class="download-btn">
-                            <span>📥</span> Download PDF
-                        </button>
+            downloadLinks.innerHTML = results.map((result, index) => {
+                const fileExtension = result.url.split('.').pop().toLowerCase();
+                const isPreviewable = ['png', 'jpg', 'jpeg', 'webp', 'avif', 'gif', 'svg'].includes(fileExtension);
+                
+                return `
+                    <div class="result-card">
+                        <div class="result-preview-container">
+                            ${isPreviewable 
+                                ? `<img src="${result.url}" alt="Generated material preview" class="result-preview" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                   <div class="result-preview-unavailable" style="display: none;">Preview unavailable</div>`
+                                : `<div class="result-preview-unavailable">Preview unavailable for this file type</div>`
+                            }
+                        </div>
+                        <div class="result-info">
+                            <h4>${result.templateName}</h4>
+                            <p class="result-format">${result.formatName} • ${result.dimensions}</p>
+                            <button onclick="downloadFile('${result.url}', '${result.templateName}_${result.formatName}.${fileExtension}')" 
+                                    class="download-btn">
+                                <span>📥</span> Download
+                            </button>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
             
             resultsDiv.classList.add('active');
-            
-            // Store results globally for download all
             window.generatedResults = results;
-            
-            // Smooth scroll to results
             resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
         
         // Download single file
-        function downloadFile(url, filename) {
-            // Create a temporary anchor element
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            link.target = '_blank';
-            
-            // For cross-origin downloads, we need to fetch and create a blob
-            fetch(url)
-                .then(response => response.blob())
-                .then(blob => {
-                    const blobUrl = window.URL.createObjectURL(blob);
-                    link.href = blobUrl;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(blobUrl);
-                })
-                .catch(error => {
-                    console.error('Download failed:', error);
-                    // Fallback to opening in new tab
-                    window.open(url, '_blank');
-                });
+        async function downloadFile(url, filename) {
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                
+                const blobUrl = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = filename;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                setTimeout(() => window.URL.revokeObjectURL(blobUrl), 100);
+            } catch (error) {
+                console.error('Download failed:', error);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = filename;
+                link.click();
+            }
         }
         
-        // Download all files
-        async function downloadAll() {
+        // Download all files as ZIP
+        async function downloadAllAsZip() {
             const results = window.generatedResults;
             if (!results || results.length === 0) return;
             
-            // Show loading message
             const btn = event.target.closest('button');
             const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<span>⏳</span> Preparing downloads...';
+            btn.innerHTML = '<span>⏳</span> Creating ZIP file...';
             btn.disabled = true;
             
-            // Download each file with a small delay
-            for (let i = 0; i < results.length; i++) {
-                const result = results[i];
-                const filename = `${result.templateName}_${result.formatName}.pdf`;
+            try {
+                const zip = new JSZip();
                 
-                try {
-                    await downloadFile(result.url, filename);
-                    // Small delay between downloads to avoid browser blocking
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                } catch (error) {
-                    console.error(`Failed to download ${filename}:`, error);
+                for (const result of results) {
+                    try {
+                        const response = await fetch(result.url);
+                        const blob = await response.blob();
+                        const fileExtension = result.url.split('.').pop().toLowerCase();
+                        const filename = `${result.templateName}_${result.formatName}.${fileExtension}`;
+                        zip.file(filename, blob);
+                    } catch (error) {
+                        console.error(`Failed to add ${result.templateName} to ZIP:`, error);
+                    }
                 }
+                
+                const zipBlob = await zip.generateAsync({ type: 'blob' });
+                
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(zipBlob);
+                link.download = `Home1st_Marketing_Materials_${new Date().toISOString().split('T')[0]}.zip`;
+                link.click();
+                
+                setTimeout(() => window.URL.revokeObjectURL(link.href), 100);
+                
+            } catch (error) {
+                console.error('Failed to create ZIP:', error);
+                showError('Failed to create ZIP file. Please download files individually.');
+            } finally {
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
             }
-            
-            // Restore button
-            btn.innerHTML = originalHtml;
-            btn.disabled = false;
         }
         
         // Show error message
@@ -1031,18 +1314,17 @@
             }, 5000);
         }
         
-        // Add event listeners for form validation
+        // Event listeners
         document.addEventListener('DOMContentLoaded', () => {
             const requiredFields = ['loName', 'loEmail', 'loPhone', 'loOfficePhone', 'loNMLS'];
             requiredFields.forEach(id => {
                 document.getElementById(id).addEventListener('input', updateGenerateButton);
             });
             
-            // Initialize app
             initApp();
         });
         
-        // Format phone numbers as user types
+        // Format phone numbers
         ['loPhone', 'loOfficePhone', 'realtorPhone'].forEach(id => {
             document.getElementById(id).addEventListener('input', function(e) {
                 let value = e.target.value.replace(/\D/g, '');
